@@ -9,6 +9,8 @@ boolean bottomSimiCircles = false;
 
 boolean filled = false;
 
+SimiCircles circleTop;
+SimiCircles circleBottom;
 
 void setup() {
   size(600, 610);
@@ -22,37 +24,53 @@ void setup() {
   rainbow.add(new Rainbow(color(0, 191, 111)));
   rainbow.add(new Rainbow(color(0, 161, 224)));
   rainbow.add(new Rainbow(color(104, 91, 199)));
+
+  circleTop = new SimiCircles(circleNumber, filled);
+  circleBottom = new SimiCircles(circleNumber, filled);
 }
 
 void draw() {
   if (topSimiCircles == true) {
     circleNumber = round(random(2, 6));
-    SimiCircles circleTop = new SimiCircles(circleNumber, filled);
+    circleTop.circleNumber = circleNumber;
     circleTop.drawCirclesTop();
   }
 
-  if(bottomSimiCircles == true) {
+  if (bottomSimiCircles == true) {;
     circleNumber = round(random(2, 6));
-    SimiCircles circleBottom = new SimiCircles(circleNumber, filled);
+    circleBottom.circleNumber = circleNumber;
     circleBottom.drawCirclesBottom();
   }
 
-
+  if(filled == true) {
+    circleTop.outline = false;
+    circleBottom.outline = false;
+    circleBottom.drawCirclesBottom();
+    circleTop.drawCirclesTop();
+  } else {
+    circleTop.outline = true;
+    circleBottom.outline = true;
+  }
+  
+  filled = false;
   topSimiCircles = false;
   bottomSimiCircles = false;
 }
 
 
 void keyPressed() {
-  if(keyCode == UP) {
+  if (keyCode == UP) {
     topSimiCircles = true;
-  } 
-  if(keyCode == DOWN) {
+  }
+  if (keyCode == DOWN) {
     bottomSimiCircles = true;
   }
 
-  if(key == 'o') {
-    background(255);
+  if (key == 'o' || key == 'O') {
     filled = !filled;
+  }
+
+  if (key == 'r' || key == 'R') {
+    background(255);
   }
 }
